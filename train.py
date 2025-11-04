@@ -45,24 +45,25 @@ def main(
 
     if torch.cuda.is_available():
         print("Use cuda!")
-        model.to("cuda")
+        device = "cuda:0"
+        model.to(device)
     else:
         print("Use cpu!")
+        device = "cpu"
     
+    data_collator = get_collator()
+
     print("Prepare train data")
     train_ds = get_data(config.size, 'train')
     train_transform = create_base_transforms(config.base_size, image_processor, 'train')
     train_ds = train_ds.with_transform(lambda x: transforms(x, train_transform))
 
     print("Prepare test data")
-    val_ds = get_data(config.size, 'test')
+    val_ds = get_data('ExtraSmall', 'test')
     test_transform = create_base_transforms(config.base_size, image_processor, 'test')
     val_ds = val_ds.with_transform(lambda x: transforms(x, test_transform))
 
-    data_collator = get_collator()
-
     is_bf16_supported = (torch.cuda.is_available() and torch.cuda.is_bf16_supported())
-
     args = get_args(config.train_conf, is_bf16=is_bf16_supported)
 
     trainer = create_trainer(
@@ -71,7 +72,6 @@ def main(
         data_collator=data_collator,
         train_dataset=train_ds, 
         eval_dataset=val_ds, 
-        image_processor=image_processor, 
         metric=get_metric(config.metric)
     )
     print("Start training")
