@@ -14,7 +14,7 @@ train_conf:
   eval_batch_size: 512
   max_steps: 50000
   warmip_ratio: 0.1
-  eval_freq: 5
-  log_freq: 5
-  save_freq: 5
+  eval_freq: 100
+  log_freq: 10
+  save_freq: 10000
   report_to: comet_ml
