@@ -1,5 +1,5 @@
 seed: 42
-size: 'ExtraSmall'
+size: 'Regular'
 model: 'microsoft/resnet-50'
 
 base_size: 224
@@ -12,9 +12,9 @@ train_conf:
   batch_size: 16
   gradient_accumulation_steps: 1
   eval_batch_size: 16
-  max_steps: 5000
+  max_steps: 1500
   warmip_ratio: 0.1
-  save_freq: 50
+  save_freq: 500
   log_freq: 1
   save_freq: 10000
   report_to: comet_ml
