@@ -1,0 +1,24 @@
+name: diffclass
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pip
+  - cmake
+  - pyarrow==21.0.0
+  - datasets==4.0.0
+  - pip:
+    - "--extra-index-url=https://download.pytorch.org/whl/cu124"
+    - torch==2.6.0 
+    - torchvision==0.21.0 
+    - torchaudio==2.6.0
+    - ml_collections==0.1.1
+    - comet_ml==3.54.0
+    - ipykernel==6.31.0
+    - pandas==2.0.0
+    - transformers==4.57.1
+    - matplotlib==3.7.5
+    - accelerate==1.10.1
+    - click==8.1.8
+    - evaluate==0.4.6
