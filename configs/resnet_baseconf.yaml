@@ -14,8 +14,9 @@ train_conf:
   eval_batch_size: 16
   max_steps: 1500
   warmip_ratio: 0.1
+  eval_freq: 50
   save_freq: 500
   log_freq: 1
   save_freq: 10000
   report_to: comet_ml
-  dataloader_num_workers: 16
+  dataloader_num_workers: 24
