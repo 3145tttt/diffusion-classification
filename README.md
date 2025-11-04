@@ -112,7 +112,5 @@ python testing_code.py
 ```
 bash run.sh
 ```
-Рекомендуется установить API ключ внутри скрипта.
-
-
+Рекомендуется установить API ключ внутри скрипта. Модель достигает accuracy на валидации **0.94**, чекпоинт хранится на HF [по ссылке](https://huggingface.co/3145tttt/diffusion-classification_base_resnet_50), параметры обучения находятся в [config](./configs/resnet_baseconf.yaml). Пример использования модели в файле [inference.py](./inference.py).
 
