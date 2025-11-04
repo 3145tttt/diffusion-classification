@@ -27,4 +27,4 @@ def get_model_pretraned(checkpoint):
     model_size = sum(t.numel() for t in model.parameters())
     print(f"Model size: {model_size/1000**2:.1f}M parameters")
 
-    return model, AutoImageProcessor.from_pretrained(checkpoint)
+    return model, AutoImageProcessor.from_pretrained(checkpoint, use_fast=True)
