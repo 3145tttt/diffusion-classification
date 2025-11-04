@@ -17,6 +17,7 @@ jobs:
     - name: Install dependencies
       run: |
         conda env create -f requirements.yml
+        conda init
         conda activate distclass
         pip install pylint
     - name: Analysing the code with pylint
