@@ -65,7 +65,7 @@ def get_data(size, split, name='lesc-unifi/dragon'):
     assert size in ["ExtraSmall", "Small", "Regular", "Large", "ExtraLarge"], f"size = {size}"
     assert split in ["train", "test"], f"split = {split}"
 
-    dragon_dataset = load_dataset(name, size, split=split).select_columns(['model.txt', 'png'])
+    dragon_dataset = load_dataset(name, size, split=split, num_proc=16).select_columns(['model.txt', 'png'])
     return dragon_dataset
 
 def create_base_transforms(base_size, image_processor, split):

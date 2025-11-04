@@ -35,7 +35,8 @@ def get_args(train_conf, is_bf16):
         load_best_model_at_end=True,
         metric_for_best_model="accuracy",
         push_to_hub=False,
-        report_to=train_conf.report_to
+        report_to=train_conf.report_to,
+        dataloader_num_workers=train_conf.dataloader_num_workers
     )
 
     return training_args
@@ -46,7 +47,6 @@ def create_trainer(
     data_collator,
     train_dataset,
     eval_dataset,
-    image_processor,
     metric
 ):    
     trainer = Trainer(
@@ -55,7 +55,6 @@ def create_trainer(
         data_collator=data_collator,
         train_dataset=train_dataset,
         eval_dataset=eval_dataset,
-        processing_class=image_processor,
         compute_metrics=lambda t: compute_metrics(t, metric),
     )
 
