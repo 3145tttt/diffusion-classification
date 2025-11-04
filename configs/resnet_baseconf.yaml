@@ -1,5 +1,6 @@
 seed: 42
 size: 'ExtraSmall'
+model: 'microsoft/resnet-50'
 
 base_size: 512
 metric: accuracy
@@ -16,3 +17,4 @@ train_conf:
   eval_freq: 5
   log_freq: 5
   save_freq: 5
+  report_to: comet_ml
