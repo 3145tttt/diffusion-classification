@@ -2,19 +2,20 @@ seed: 42
 size: 'ExtraSmall'
 model: 'microsoft/resnet-50'
 
-base_size: 512
+base_size: 224
 metric: accuracy
 
 
 train_conf:
   run_name: base_resnet_50_pretrained
   lr: 0.001
-  batch_size: 256
+  batch_size: 16
   gradient_accumulation_steps: 1
-  eval_batch_size: 512
-  max_steps: 50000
+  eval_batch_size: 16
+  max_steps: 5000
   warmip_ratio: 0.1
-  eval_freq: 100
-  log_freq: 10
+  save_freq: 50
+  log_freq: 1
   save_freq: 10000
   report_to: comet_ml
+  dataloader_num_workers: 16
