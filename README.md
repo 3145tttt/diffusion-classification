@@ -108,7 +108,7 @@ conda activate distclass
 python testing_code.py
 ```
 
-Запуск обучение
+Запуск обучение:
 ```
 bash run.sh
 ```
