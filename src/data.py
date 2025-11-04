@@ -69,7 +69,7 @@ def get_data(size, split, name='lesc-unifi/dragon'):
     return dragon_dataset
 
 def create_base_transforms(base_size, image_processor, split):
-    assert split in ["train", "validation"]
+    assert split in ["train", "test"], f"split = {split}"
 
     normalize = Normalize(mean=image_processor.image_mean, std=image_processor.image_std)
     if split == "train":
