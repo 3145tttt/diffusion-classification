@@ -23,8 +23,8 @@ jobs:
     
     - name: Install pylint
       run: |
-        conda install -y pylint
-    
+        conda run -n diffclass pip install pylint
+   
     - name: Run pylint analysis
       run: |
-        python -m pylint $(find . -name "*.py" -not -path "./.*" -not -path "*/site-packages/*") --exit-zero
+        conda run -n diffclass python -m pylint $(find . -name "*.py" -not -path "./.*" -not -path "*/site-packages/*") --exit-zero
