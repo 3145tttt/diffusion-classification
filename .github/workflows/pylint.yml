@@ -9,18 +9,28 @@ jobs:
       matrix:
         python-version: ["3.10"]
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Set up Miniconda
+      uses: conda-incubator/setup-miniconda@v2
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
+        activate-environment: diffclass
+        auto-activate-base: false
+    
+    - name: Create and activate conda environment
       run: |
         conda env create -f requirements.yml
-        echo $CONDA
-        $CONDA/bin/activate diffclass
-        pip install pylint
-    - name: Analysing the code with pylint
+        conda init bash
+        conda activate diffclass
+    
+    - name: Install pylint
       run: |
-        $CONDA/bin/activate diffclass
-        pylint $(git ls-files '*.py')
+        conda activate diffclass
+        pip install pylint
+    
+    - name: Run pylint analysis
+      run: |
+        conda activate diffclass
+        python -m pylint $(find . -name "*.py" -not -path "./.*" -not -path "*/site-packages/*") --exit-zero
