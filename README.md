@@ -104,7 +104,7 @@ conda env create -f requirements.yml
 
 Тестирование корректности установки:
 ```
-conda activate distclass
+conda activate diffclass
 python testing_code.py
 ```
 
