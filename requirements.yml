@@ -8,6 +8,7 @@ dependencies:
   - cmake
   - pyarrow==21.0.0
   - datasets==4.0.0
+  - dvc
   - pip:
     - "--extra-index-url=https://download.pytorch.org/whl/cu124"
     - torch==2.6.0 
@@ -23,3 +24,4 @@ dependencies:
     - click==8.1.8
     - evaluate==0.4.6
     - scikit-learn==1.6.1
+    - dvc_s3
