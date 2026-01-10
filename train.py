@@ -1,8 +1,8 @@
+import os
 import comet_ml
 
 import yaml
 import click
-import os
 import torch
 from ml_collections import ConfigDict
 
@@ -22,13 +22,16 @@ from src.trainer import get_args, create_trainer, get_metric
 def main(
     config: str
 ):
-    
+    """
+    Main configurate
+    """
+
     # Enable logging of model checkpoints
     use_comet = True
     if os.environ['COMET_API_KEY'] == 'YOUR API':
         print("Set comet API! Run withot logging")
         use_comet = False
-    
+
     if use_comet:
         os.environ["COMET_LOG_ASSETS"] = "True"
         comet_ml.login(project_name="MLOPS")
@@ -50,7 +53,7 @@ def main(
     else:
         print("Use cpu!")
         device = "cpu"
-    
+
     data_collator = get_collator()
 
     print("Prepare train data")
@@ -67,11 +70,11 @@ def main(
     args = get_args(config.train_conf, is_bf16=is_bf16_supported)
 
     trainer = create_trainer(
-        model=model, 
+        model=model,
         training_args=args,
         data_collator=data_collator,
-        train_dataset=train_ds, 
-        eval_dataset=val_ds, 
+        train_dataset=train_ds,
+        eval_dataset=val_ds,
         metric=get_metric(config.metric)
     )
     print("Start training")

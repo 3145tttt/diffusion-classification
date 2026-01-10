@@ -42,13 +42,13 @@ def get_args(train_conf, is_bf16):
     return training_args
 
 def create_trainer(
-    model, 
-    training_args, 
+    model,
+    training_args,
     data_collator,
     train_dataset,
     eval_dataset,
     metric
-):    
+):
     trainer = Trainer(
         model=model,
         args=training_args,

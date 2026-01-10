@@ -1,4 +1,11 @@
-from torchvision.transforms import Resize, Compose, Normalize, ToTensor, RandomHorizontalFlip, RandomGrayscale
+from torchvision.transforms import (
+    Resize,
+    Compose,
+    Normalize,
+    ToTensor,
+    RandomHorizontalFlip,
+    RandomGrayscale
+)
 
 from datasets import load_dataset
 from transformers import DefaultDataCollator
@@ -73,7 +80,13 @@ def create_base_transforms(base_size, image_processor, split):
 
     normalize = Normalize(mean=image_processor.image_mean, std=image_processor.image_std)
     if split == "train":
-        return Compose([Resize(base_size), RandomHorizontalFlip(), RandomGrayscale(), ToTensor(), normalize])
+        return Compose([
+            Resize(base_size),
+            RandomHorizontalFlip(),
+            RandomGrayscale(),
+            ToTensor(),
+            normalize
+        ])
     return Compose([Resize(base_size), ToTensor(), normalize])
 
 def transforms(examples, _transforms):

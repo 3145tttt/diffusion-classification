@@ -1,14 +1,10 @@
-import comet_ml
-
 import yaml
-import click
-import os
 import torch
 from ml_collections import ConfigDict
 
 from transformers import AutoModelForImageClassification
 
-from src.data import get_collator, get_data, transforms, create_base_transforms
+from src.data import get_data, create_base_transforms
 from src.model import get_model_pretraned
 from src.utils.random import set_global_seed
 
@@ -21,6 +17,9 @@ def inference_model(
     config_path="./configs/resnet_baseconf.yaml",
     repo_id="3145tttt/diffusion-classification_base_resnet_50",
 ):
+    """
+    Inference model on test image
+    """
     with open(config_path) as stream:
         config = ConfigDict(yaml.safe_load(stream))
 
@@ -40,9 +39,9 @@ def inference_model(
     print(f"True diffusion = {true_type}")
 
 
-
-test_object = get_data('ExtraSmall', 'test')[617]
-inference_model(test_object)
+if __name__ == "__main__":
+    test_object = get_data('ExtraSmall', 'test')[617]
+    inference_model(test_object)
 
 # Output:
 # Pred diffusion = SD_1.5, with probability = 0.9487

@@ -8,8 +8,11 @@ from src.model import get_model_pretraned
 CONFIG_TEST_RESNET = './configs/resnet_baseconf.yaml'
 
 def test_forward(config=CONFIG_TEST_RESNET):
-    
-    with open(config) as stream:
+    """
+    Test model forward
+    """
+
+    with open(config, 'r', encoding='utf-8') as stream:
         config = ConfigDict(yaml.safe_load(stream))
 
     print("Creating model ...")
@@ -21,7 +24,12 @@ def test_forward(config=CONFIG_TEST_RESNET):
     for data_type in ['train', 'test']:
         print(f"Creating data {data_type} ...")
         ds = get_data('ExtraSmall', data_type)
-        ds = ds.with_transform(lambda x: transforms(x, create_base_transforms(config.base_size, image_processor, data_type)))
+        ds = ds.with_transform(
+            lambda x: transforms(
+                x,
+                create_base_transforms(config.base_size, image_processor, data_type)
+            )
+        )
         print(f"Creating data {data_type} done")
 
         batch = data_collator([ds[i] for i in range(2)])
