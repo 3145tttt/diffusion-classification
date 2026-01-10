@@ -16,8 +16,6 @@ stages:
     cmd: COMET_API_KEY='YOUR API' CUDA_VISIBLE_DEVICES=0 python train.py --config ./configs/resnet_baseconf.yaml
     deps:
       - train.py
-    outs:
-      - base_resnet_50_pretrained
   evaluate:
     cmd: python inference.py --config ./configs/resnet_baseconf.yaml > inference_output.txt
     deps:
