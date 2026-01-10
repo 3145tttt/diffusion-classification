@@ -1,0 +1,25 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: python save_dataset.py --config ./configs/resnet_baseconf.yaml
+    deps:
+    - path: save_dataset.py
+      hash: md5
+      md5: f346e2c7f40dcdb76413377e7f53e94b
+      size: 647
+    - path: src/data.py
+      hash: md5
+      md5: 8180ff0843a1c2c10ac66fd5881215dd
+      size: 2503
+  testing:
+    cmd: python testing_code.py
+    deps:
+    - path: src
+      hash: md5
+      md5: 53e65008c7c2b242ea19b674e3fb494d.dir
+      size: 18149
+      nfiles: 12
+    - path: testing_code.py
+      hash: md5
+      md5: bbe0ad792ceb9d5ac063cc5ee432eeca
+      size: 1188
