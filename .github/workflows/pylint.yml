@@ -1,13 +1,14 @@
-name: Pylint
+name: Pylint Code Analysis
 
 on: [push]
 
 jobs:
-  build:
+  pylint:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         python-version: ["3.10"]
+    
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -17,20 +18,13 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
         activate-environment: diffclass
+        environment-file: requirements.yml
         auto-activate-base: false
-    
-    - name: Create and activate conda environment
-      run: |
-        conda env create -f requirements.yml
-        conda init bash
-        conda activate diffclass
     
     - name: Install pylint
       run: |
-        conda activate diffclass
-        pip install pylint
+        conda install -y pylint
     
     - name: Run pylint analysis
       run: |
-        conda activate diffclass
         python -m pylint $(find . -name "*.py" -not -path "./.*" -not -path "*/site-packages/*") --exit-zero
