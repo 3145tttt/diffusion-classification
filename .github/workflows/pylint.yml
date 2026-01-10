@@ -22,4 +22,5 @@ jobs:
         pip install pylint
     - name: Analysing the code with pylint
       run: |
+        $CONDA/bin/activate diffclass
         pylint $(git ls-files '*.py')
