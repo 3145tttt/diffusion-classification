@@ -1,5 +1,5 @@
 seed: 42
-size: 'Regular'
+size: 'ExtraSmall'
 model: 'microsoft/resnet-50'
 
 base_size: 224

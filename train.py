@@ -5,11 +5,13 @@ import yaml
 import click
 import torch
 from ml_collections import ConfigDict
+from datasets import load_from_disk
 
 from src.utils.random import set_global_seed
-from src.data import get_data, get_collator, create_base_transforms, transforms
+from src.data import get_collator, create_base_transforms, transforms
 from src.model import get_model_pretraned
 from src.trainer import get_args, create_trainer, get_metric
+
 
 @click.command()
 @click.option(
@@ -57,12 +59,17 @@ def main(
     data_collator = get_collator()
 
     print("Prepare train data")
-    train_ds = get_data(config.size, 'train')
+    train_pth = f"./datasets/{config.size}_train"
+    test_pth = f"./datasets/{config.size}_test"
+    assert os.path.exists(train_pth)
+    assert os.path.exists(test_pth)
+    
+    train_ds = load_from_disk(train_pth,)
     train_transform = create_base_transforms(config.base_size, image_processor, 'train')
     train_ds = train_ds.with_transform(lambda x: transforms(x, train_transform))
 
     print("Prepare test data")
-    val_ds = get_data('ExtraSmall', 'test')
+    val_ds = load_from_disk(test_pth)
     test_transform = create_base_transforms(config.base_size, image_processor, 'test')
     val_ds = val_ds.with_transform(lambda x: transforms(x, test_transform))
 
