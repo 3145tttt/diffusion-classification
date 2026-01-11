@@ -1,0 +1,7 @@
+pandas==2.0.0
+ml_collections==0.1.1
+transformers==4.57.1
+numpy==1.26.4
+datasets==4.0.0
+# torch==2.6.0 
+# torchvision==0.21.0 

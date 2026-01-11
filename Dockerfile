@@ -1,7 +1,6 @@
-FROM python:3.10-slim
+FROM pytorch/pytorch:2.6.0-cuda12.4-cudnn9-runtime
 WORKDIR /app
-COPY requirements.txt ./
-RUN pip install -r requirements.txt
-# COPY . .
+COPY requirements_predict.yml ./
+RUN pip install -r requirements_predict.yml
 
 ENTRYPOINT ["python", "predict.py"]
