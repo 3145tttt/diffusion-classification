@@ -1,6 +1,6 @@
 outs:
-- md5: cb638ef4bd3db60aaa8740e5c9ed0327.dir
-  size: 1415886465
+- md5: 61ec708109e1fa0ebcae8ade51786d60.dir
+  size: 1415886463
   nfiles: 35
   hash: md5
   path: base_resnet_50_pretrained
