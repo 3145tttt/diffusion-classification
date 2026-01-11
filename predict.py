@@ -101,8 +101,10 @@ def main(
     print(f"Используется config {config.split('/')[-1]}\n")
     with open(config) as stream:
         repo_id = ConfigDict(yaml.safe_load(stream)).train_conf.run_name
-
     try:
+        last_checkpoint = sorted(os.listdir(repo_id))[-1]
+        repo_id = f"{repo_id}/{last_checkpoint}"
+        print(f"Выбран чекпоинт {repo_id}")
         model = get_inference_model(repo_id)
     except Exception:
         print(f"Не найдена обученная модель в папке {repo_id}")
