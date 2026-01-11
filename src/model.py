@@ -3,6 +3,9 @@ import torch
 from transformers import AutoModelForImageClassification, AutoImageProcessor
 from src.data import id2label, label2id
 
+def get_inference_model(repo_id):
+    return AutoModelForImageClassification.from_pretrained(repo_id)
+
 def get_model_pretraned(checkpoint):
     assert checkpoint in ["microsoft/resnet-50", "google/vit-base-patch16-224"], f"{checkpoint}"
     assert len(id2label) == len(label2id), f"{id2label}, {label2id}"
