@@ -212,3 +212,5 @@ private_*
 /base_resnet_50_pretrained
 *.csv
 *.ipynb
+/model-store
+*.pth
