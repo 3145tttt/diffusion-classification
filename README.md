@@ -142,3 +142,47 @@ docker build -t ml-app:v1 .
 docker run -v$PWD:/app -it ml-app:v1 --input_path testing_imgs --output_path results.csv
 ```
 Аргумент `--input_path` содержит путь до папки с изображениями, для которых нужно сделать предсказание (важно, чтобы в папке хранились только изображений), аргумент `--output_path` содержит путь для `csv` файла, в который будут записан результат работы.
+
+
+# TorchServe
+
+Для корректной работы необходимо добавить в окружение библиотеки с помощью команд:
+
+```
+pip install torchserve==0.12.0 torch-model-archiver==0.12.0 torch-workflow-archiver==0.2.15
+```
+
+Эта часть пока не работает, что было сделано:
+
+С помощью `python convert_model.py` модель из Hugging Face конвертируется и сохраняется в `model_full.pth`. После чего модель конвертируется в `.maк` с помощью команды:
+
+```
+torch-model-archiver \
+  --model-name mymodel \
+  --version 1.0 \
+  --serialized-file model_full.pt \
+  --handler handler.py \
+  --export-path model-store \
+  --force
+```
+
+Дополнительно архив `.mar` сохраняется в dvc. Далее собирается докер образ `docker build -t mymodel-serve:v1 -f Dockerfile_torchserve .`
+
+Для запуска создания контейнера используется следующая команда:
+
+```
+docker run -d \
+  -p 8080:8080 \
+  -p 8081:8081 \
+  --name mymodel-server \
+  mymodel-serve:v1
+```
+
+В текущей версии при запуске `curl http://localhost:8081/ping` появляется ошибка:
+```
+{
+  "code": 400,
+  "type": "InvalidKeyException",
+  "message": "Token Authorization failed. Token either incorrect, expired, or not provided correctly"
+}
+```
