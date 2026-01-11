@@ -4,6 +4,7 @@ import os
 from tqdm import tqdm
 import pandas as pd
 import yaml
+import click
 
 import torch
 from ml_collections import ConfigDict
@@ -68,18 +69,50 @@ def inference_model(
     print(f"True diffusion = {target}")
 
 
+
+@click.command()
+@click.option(
+    "--config",
+    metavar="PATH",
+    type=str,
+    required=True,
+    help="Path to config including model, training and dataset info.",
+    default='./configs/resnet_baseconf.yaml'
+)
+@click.option(
+    "--input_path",
+    metavar="PATH",
+    type=str,
+    required=True,
+    help="Path to config including model, training and dataset info."
+)
+@click.option(
+    "--output_path",
+    metavar="PATH",
+    type=str,
+    required=True,
+    help="Path to config including model, training and dataset info."
+)
+def main(
+    config: str,
+    input_path: str,
+    output_path: str,
+):
+    print(f"Используется config {config.split('/')[-1]}\n")
+    with open(config) as stream:
+        repo_id = ConfigDict(yaml.safe_load(stream)).train_conf.run_name
+
+    try:
+        model = get_inference_model(repo_id)
+    except Exception:
+        print(f"Не найдена обученная модель в папке {repo_id}")
+        print("Будет использована предобученная модель с Hugging Face")
+        print("Путь до модели: 3145tttt/diffusion-classification_base_resnet_50")
+        print("Если вы хотите поменять путь до модели, выберите нужный config через изменение --config")
+        repo_id = "3145tttt/diffusion-classification_base_resnet_50"
+        model = get_inference_model(repo_id)
+
+    predict_arr(model, config, input_path, output_path)
+
 if __name__ == "__main__":
-    test_object = load_from_disk('./datasets/ExtraSmall_test')[617]
-    repo_id = "3145tttt/diffusion-classification_base_resnet_50",
-    model = get_inference_model(repo_id)
-    inference_model(test_object, model)
-
-# Output:
-# Pred diffusion = SD_1.5, with probability = 0.9487
-# True diffusion = SD_1.5
-
-
-if __name__ == "__main__":
-
-    repo_id = "3145tttt/diffusion-classification_base_resnet_50",
-    model = get_inference_model(repo_id)
+    main()

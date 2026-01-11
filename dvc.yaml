@@ -4,22 +4,20 @@ stages:
     deps:
       - save_dataset.py
       - src/data.py
-    # outs:
-    #   - datasets/ExtraSmall_test
-    #   - datasets/ExtraSmall_train
   testing:
     cmd: python testing_code.py
     deps:
       - src
       - testing_code.py
+      - predict.py
   train:
     cmd: COMET_API_KEY='YOUR API' CUDA_VISIBLE_DEVICES=0 python train.py --config ./configs/resnet_baseconf.yaml
     deps:
       - train.py
   evaluate:
-    cmd: python inference.py --config ./configs/resnet_baseconf.yaml > inference_output.txt
+    cmd: python predict.py --input_path testing_imgs --output_path testing_results.csv
     deps:
-      - inference.py
+      - predict.py
       - base_resnet_50_pretrained
     outs:
-      - inference_output.txt
+      - inference_output.csv
