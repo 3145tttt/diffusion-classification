@@ -209,3 +209,5 @@ __marimo__/
 private_*
 *checkpoint*
 /datasets
+/base_resnet_50_pretrained
+*.csv
