@@ -1,0 +1,12 @@
+
+FROM pytorch/torchserve:latest
+
+COPY model-store/mymodel.mar /home/model-server/model-store/
+COPY config.properties /home/model-server/config.properties
+EXPOSE 8080 8081
+
+CMD ["torchserve", \
+     "--start", \
+     "--model-store", "/home/model-server/model-store", \
+     "--models", "mymodel=mymodel.mar", \
+     "--ts-config", "/home/model-server/config.properties"]
