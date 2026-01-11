@@ -3,6 +3,10 @@ stages:
   prepare:
     cmd: python save_dataset.py --config ./configs/resnet_baseconf.yaml
     deps:
+    - path: configs/resnet_baseconf.yaml
+      hash: md5
+      md5: 2498060409e9f3d7782cf65150be5cb3
+      size: 363
     - path: save_dataset.py
       hash: md5
       md5: f346e2c7f40dcdb76413377e7f53e94b
@@ -14,12 +18,42 @@ stages:
   testing:
     cmd: python testing_code.py
     deps:
+    - path: predict.py
+      hash: md5
+      md5: 6d49f52fe7d702aa4b12f833335abb70
+      size: 3760
     - path: src
       hash: md5
-      md5: 53e65008c7c2b242ea19b674e3fb494d.dir
-      size: 18149
+      md5: 1512ee3f3e96ae844bd7af4949f0c50d.dir
+      size: 18387
       nfiles: 12
     - path: testing_code.py
       hash: md5
-      md5: bbe0ad792ceb9d5ac063cc5ee432eeca
-      size: 1188
+      md5: 1d84668c77c52ee5762d33ca83a71b38
+      size: 3358
+  train:
+    cmd: COMET_API_KEY='YOUR API' CUDA_VISIBLE_DEVICES=0 python train.py 
+      --config ./configs/resnet_baseconf.yaml
+    deps:
+    - path: train.py
+      hash: md5
+      md5: 58174ea223437e82254ea76946870916
+      size: 2484
+  evaluate:
+    cmd: python predict.py --input_path testing_imgs --output_path 
+      inference_output.csv
+    deps:
+    - path: base_resnet_50_pretrained
+      hash: md5
+      md5: cb638ef4bd3db60aaa8740e5c9ed0327.dir
+      size: 1415886465
+      nfiles: 35
+    - path: predict.py
+      hash: md5
+      md5: 6d49f52fe7d702aa4b12f833335abb70
+      size: 3760
+    outs:
+    - path: inference_output.csv
+      hash: md5
+      md5: c100ea17f9251457ea949be8b50ceb09
+      size: 60

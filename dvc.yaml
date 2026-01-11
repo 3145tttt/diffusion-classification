@@ -1,21 +1,22 @@
 stages:
-  prepare:
-    cmd: python save_dataset.py --config ./configs/resnet_baseconf.yaml
-    deps:
-      - save_dataset.py
-      - src/data.py
   testing:
     cmd: python testing_code.py
     deps:
       - src
       - testing_code.py
       - predict.py
+  prepare:
+    cmd: python save_dataset.py --config ./configs/resnet_baseconf.yaml
+    deps:
+      - save_dataset.py
+      - src/data.py
+      - configs/resnet_baseconf.yaml
   train:
     cmd: COMET_API_KEY='YOUR API' CUDA_VISIBLE_DEVICES=0 python train.py --config ./configs/resnet_baseconf.yaml
     deps:
       - train.py
   evaluate:
-    cmd: python predict.py --input_path testing_imgs --output_path testing_results.csv
+    cmd: python predict.py --input_path testing_imgs --output_path inference_output.csv
     deps:
       - predict.py
       - base_resnet_50_pretrained
