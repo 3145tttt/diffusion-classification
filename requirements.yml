@@ -8,12 +8,11 @@ dependencies:
   - cmake
   - pyarrow==21.0.0
   - datasets==4.0.0
-  - dvc
+  - dvc==3.66.1
   - pip:
     - "--extra-index-url=https://download.pytorch.org/whl/cu124"
     - torch==2.6.0 
     - torchvision==0.21.0 
-    - torchaudio==2.6.0
     - ml_collections==0.1.1
     - comet_ml==3.54.0
     - ipykernel==6.31.0
@@ -24,4 +23,5 @@ dependencies:
     - click==8.1.8
     - evaluate==0.4.6
     - scikit-learn==1.6.1
-    - dvc_s3
+    - dvc_s3==3.2.2
+    - numpy==1.26.4
